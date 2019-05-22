@@ -14,7 +14,7 @@ class FactoryLauncher : Activity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        listView = findViewById(R.id.lv_info)
+        listView = this.findViewById(R.id.lv_info)
 
         var adapter = InfoAdapter(this)
 
@@ -23,12 +23,10 @@ class FactoryLauncher : Activity() {
 
 }
 
-class InfoAdapter : BaseAdapter {
+class InfoAdapter(var context: Context) : BaseAdapter() {
     var infoMap: HashMap<String, String> = HashMap()
-    var context: Context
 
-    constructor(context: Context) {
-        this.context = context
+    init {
         for (index in 0..9) {
             infoMap.put("Version $index", "Value Data&$index")
         }
@@ -37,9 +35,7 @@ class InfoAdapter : BaseAdapter {
     override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
         var view = View.inflate(context, R.layout.info_item, null)
         view.findViewById<InfoTagView>(R.id.info_item).setTagName("Version $position")
-        view.findViewById<InfoTagView>(R.id.info_item).setTagValue(infoMap.get("Version $position"))
-//        view.findViewById<TextView>(R.id.tv_key).text = "Version $position"
-//        view.findViewById<TextView>(R.id.tv_value).text = infoMap.get("Version $position")
+        view.findViewById<InfoTagView>(R.id.info_item).setTagValue(infoMap["Version $position"])
         return view
     }
 

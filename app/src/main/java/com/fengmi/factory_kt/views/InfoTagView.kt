@@ -12,13 +12,34 @@ import com.fengmi.factory_kt.R
 import com.fengmi.factory_kt.utils.DisplayUtils
 
 class InfoTagView : View {
+    private val TAG = "InfoTagView"
+    /**
+     * Tag Name Text Size
+     */
     private var mTagNameSize = DisplayUtils.sp2px(context, 10.toFloat())
+    /**
+     * Tag Value Text Size
+     */
     private var mTagValueSize = DisplayUtils.sp2px(context, 10.toFloat())
+    /**
+     * Tag Name Text Color
+     */
     private var mTagNameColor = Color.BLACK
+    /**
+     * Tag Value Text Color
+     */
     private var mTagValueColor = Color.BLACK
-    private var mTagBackgroudColr = Color.GREEN
-
+    /**
+     * Tag Background Color
+     */
+    private var mTagBackgroundColor = Color.LTGRAY
+    /**
+     * Tag Name Text
+     */
     private var mTagName: String? = null
+    /**
+     * Tag Value Text
+     */
     private var mTagValue: String? = null
 
     private var mWidth: Int = 0
@@ -89,18 +110,18 @@ class InfoTagView : View {
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec)
-        setMeasuredDimension(widthMeasureSpec,heightMeasureSpec)
+        setMeasuredDimension(measureW(widthMeasureSpec), measureH(heightMeasureSpec))
     }
     override fun onDraw(canvas: Canvas) {
 
         val coreWidth = mWidth - (2 * mMargin)
         val coreHeight = mHeight - (2 * mMargin)
 
-        val tagNameWidth = coreWidth * 0.38
+        val tagNameWidth = coreWidth * 0.39
         var tagValueWidth = coreWidth * 0.6
-        val tagSplitWidth = coreWidth * 0.02
+        val tagSplitWidth = coreWidth * 0.01
 
-        mBGPaint!!.color = mTagBackgroudColr
+        mBGPaint!!.color = mTagBackgroundColor
         canvas.drawRoundRect(
             mMargin.toFloat(), mMargin.toFloat(),
             (mMargin + tagNameWidth).toFloat(),
@@ -125,7 +146,7 @@ class InfoTagView : View {
         mTXPaint!!.color = mTagNameColor
         var tagNameX = mMargin + (Math.abs(tagNameWidth - tagNameW) / 2)
         var tagNameY = (mHeight.toFloat() / 2) + (tagNameH.toFloat() / 2)
-        Log.d("InfoTagView", "Text x=$tagNameX, y=$tagNameY")
+        Log.d(TAG, "Text x=$tagNameX, y=$tagNameY")
         canvas.drawText(
             mTagName,
             tagNameX.toFloat(),
@@ -139,7 +160,7 @@ class InfoTagView : View {
         tagNameH = temp.height()
         tagNameX = mMargin + tagNameWidth + tagSplitWidth + (Math.abs(tagValueWidth - tagNameW) / 2)
         tagNameY = (mHeight.toFloat() / 2) + (tagNameH.toFloat() / 2)
-        Log.d("InfoTagView", "Text x=$tagNameX, y=$tagNameY")
+        Log.d(TAG, "Text x=$tagNameX, y=$tagNameY")
         canvas.drawText(
             mTagValue,
             tagNameX.toFloat(),
@@ -158,6 +179,50 @@ class InfoTagView : View {
         } else {
             mTagValue = value
         }
+    }
+
+    private fun measureW(widthMeasureSpec: Int): Int {
+        val widthMode = MeasureSpec.getMode(widthMeasureSpec)
+        val widthSize = MeasureSpec.getSize(widthMeasureSpec)
+        val defaultWidth: Float
+        defaultWidth = when (widthMode) {
+            MeasureSpec.AT_MOST -> {
+                Log.d(TAG, "Mode is AT_MOST,Size is $widthSize")
+                DisplayUtils.sp2px(context, 150.toFloat())
+            }
+            MeasureSpec.EXACTLY -> {
+                Log.d(TAG, "Mode is EXACTLY,Size is $widthSize")
+                widthSize.toFloat()
+            }
+            else -> {
+                Log.d(TAG, "Mode is $widthMode,Size is $widthSize")
+                150.toFloat()
+            }
+        }
+
+        return defaultWidth.toInt()
+    }
+
+    private fun measureH(heightMeasureSpec: Int): Int {
+        val heightMode = MeasureSpec.getMode(heightMeasureSpec)
+        val heightSize = MeasureSpec.getSize(heightMeasureSpec)
+        val defaultHeight: Float
+        defaultHeight = when (heightMode) {
+            MeasureSpec.AT_MOST -> {
+                Log.d(TAG, "Mode is AT_MOST,Size is $heightSize")
+                DisplayUtils.sp2px(context, 25.toFloat())
+            }
+            MeasureSpec.EXACTLY -> {
+                Log.d(TAG, "Mode is EXACTLY,Size is $heightSize")
+                heightSize.toFloat()
+            }
+            else -> {
+                Log.d(TAG, "Mode is ELSE,Size is $heightSize")
+                DisplayUtils.sp2px(context, 25.toFloat())
+            }
+        }
+
+        return defaultHeight.toInt()
     }
 
 }

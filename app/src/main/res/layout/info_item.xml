@@ -5,5 +5,8 @@
               android:layout_height="match_parent">
     <!--<TextView android:id="@+id/tv_key" android:layout_weight="1" android:layout_width="0dp" android:layout_height="match_parent"/>-->
     <!--<TextView android:id="@+id/tv_value" android:layout_weight="1" android:layout_width="0dp" android:layout_height="match_parent"/>-->
-    <com.fengmi.factory_kt.views.InfoTagView android:id="@+id/info_item" android:layout_width="match_parent" android:layout_height="match_parent"/>
+    <com.fengmi.factory_kt.views.InfoTagView
+            android:id="@+id/info_item"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
 </LinearLayout>
